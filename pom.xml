@@ -11,6 +11,7 @@
     <modules>
         <module>mongoDbStudy</module>
         <module>vertxStudy</module>
+        <module>ThreadStudy</module>
     </modules>
 
     <properties>
@@ -28,5 +29,13 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>maven-aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
 
 </project>
