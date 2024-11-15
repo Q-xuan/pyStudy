@@ -12,6 +12,7 @@
         <module>mongoDbStudy</module>
         <module>vertxStudy</module>
         <module>ThreadStudy</module>
+        <module>RedisStudy</module>
     </modules>
 
     <properties>
