@@ -13,6 +13,7 @@
         <module>vertxStudy</module>
         <module>ThreadStudy</module>
         <module>RedisStudy</module>
+        <module>CaffeineStudy</module>
     </modules>
 
     <properties>
