@@ -9,10 +9,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Unit test for simple App.
@@ -26,13 +26,30 @@ public class AppTest {
     @Autowired
     private CaffeineUtil cacheUtil;
 
-    @Builder
-    @Data
-    @ToString
-    public static class User {
-        private Integer id;
-        private String name;
-        private Integer age;
+    private List<User> selectUser() {
+        List<User> userList = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            userList.add(User.builder().id(i + 1).age(1).name("py").build());
+        }
+        return userList;
+    }
+
+    public User selectUserById(int id) {
+        List<User> users = selectUser();
+        Optional<User> first = users.stream().filter(user -> user.getId() == id).findFirst();
+        return first.orElse(null);
+    }
+
+    @Cacheable(cacheNames = "user")
+    public User getUser(int id) {
+        return selectUserById(id);
+    }
+
+    @Test
+    public void test02() {
+        List<User> userList = selectUser();
+        System.out.println("userList.getClass().getSimpleName() = " + userList.getClass().getSimpleName());
+        System.out.println(userList.getClass().arrayType());
     }
 
     @Test
@@ -51,6 +68,10 @@ public class AppTest {
 
         all.forEach((k, v) -> System.out.println(k + ":" + v));
 
+        printStats();
+    }
+
+    private void printStats() {
         System.out.println("manualCache.stats().evictionCount() = " + manualCache.stats().evictionCount());
         System.out.println("manualCache.stats().hitCount() = " + manualCache.stats().hitCount());
         System.out.println("manualCache.stats().missCount() = " + manualCache.stats().missCount());
