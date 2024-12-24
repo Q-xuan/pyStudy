@@ -154,13 +154,11 @@ public class BytedanceTest {
     @Test
     public void test05() {
         String[] testTitles1 = {"adcdcefdfeffe", "adcdcefdfeff", "dcdcefdfeffe", "adcdcfe"};
-        String[] testTitles2 = {"CLSomGhcQNvFuzENTAMLCqxBdj", "CLSomNvFuXTASzENTAMLCqxBdj", "CLSomFuXTASzExBdj",
-                "CLSoQNvFuMLCqxBdj", "SovFuXTASzENTAMLCq", "mGhcQNvFuXTASzENTAMLCqx"};
+        String[] testTitles2 = {"CLSomGhcQNvFuzENTAMLCqxBdj", "CLSomNvFuXTASzENTAMLCqxBdj", "CLSomFuXTASzExBdj", "CLSoQNvFuMLCqxBdj", "SovFuXTASzENTAMLCq", "mGhcQNvFuXTASzENTAMLCqx"};
         String[] testTitles3 = {"abcdefg", "abefg", "efg"};
 
         System.out.println(solution05(4, "ad{xyz}cdc{y}f{x}e", testTitles1).equals("True,False,False,True"));
-        System.out.println(solution05(6, "{xxx}h{cQ}N{vF}u{XTA}S{NTA}MLCq{yyy}", testTitles2)
-                .equals("False,False,False,False,False,True"));
+        System.out.println(solution05(6, "{xxx}h{cQ}N{vF}u{XTA}S{NTA}MLCq{yyy}", testTitles2).equals("False,False,False,False,False,True"));
         System.out.println(solution05(3, "a{bdc}efg", testTitles3).equals("True,True,False"));
     }
 
@@ -271,10 +269,10 @@ public class BytedanceTest {
     }
 
     @Test
-    public void test09(){
-        System.out.println(solution09(2, 2, 2, new int[] { 1, 3 }, new int[] { 3, 1 }, new int[] { 3, 4 }) == 0);
-        System.out.println(solution09(3, 5, 5, new int[] { 2, 1, 3 }, new int[] { 1, 3, 2 }, new int[] { 10, 7, 8 }) == 18);
-        System.out.println(solution09(1, 3, 3, new int[] { 4 }, new int[] { 4 }, new int[] { 5 }) == 0);
+    public void test09() {
+        System.out.println(solution09(2, 2, 2, new int[]{1, 3}, new int[]{3, 1}, new int[]{3, 4}) == 0);
+        System.out.println(solution09(3, 5, 5, new int[]{2, 1, 3}, new int[]{1, 3, 2}, new int[]{10, 7, 8}) == 18);
+        System.out.println(solution09(1, 3, 3, new int[]{4}, new int[]{4}, new int[]{5}) == 0);
     }
 
     //01背包问题
@@ -301,6 +299,63 @@ public class BytedanceTest {
         }
 
         return dp[n][T][H];
+    }
+
+
+    @Test
+    public void test10() {
+        System.out.println(solution10(3, 1) == 6);
+        System.out.println(solution10(2, 2) == 6);
+        System.out.println(solution10(4, 3) == 30);
+    }
+
+    //14 数组元素之和最小化
+    public static int solution10(int n, int k) {
+        // PLEASE DO NOT MODIFY THE FUNCTION SIGNATURE
+        // write code here
+        int sum = 0;
+        for (int i = 1; i <= n; i++) {
+            sum += i * k;
+        }
+        return sum;
+    }
+
+
+    @Test
+    public void test11() {
+        System.out.println(solution11("aba", "abb") == 1);
+        System.out.println(solution11("abcd", "efg") == 4);
+        System.out.println(solution11("xyz", "xy") == 1);
+        System.out.println(solution11("hello", "helloworld") == 0);
+        System.out.println(solution11("same", "same") == 0);
+        System.out.println(solution11("bbbabaaaaa", "baaabaaabaaaba") == 3);
+    }
+
+    //15 最少前缀问题
+    public static int solution11(String S, String T) {
+        // PLEASE DO NOT MODIFY THE FUNCTION SIGNATURE
+        // write code here
+        // 找到最长公共前缀的长度
+        int left = 0, right = 0;
+        int operations = 0; // 初始化操作次数
+
+        while (left < S.length() && right < T.length()) {
+            if (S.charAt(left) == T.charAt(right)) {
+                // 字符匹配，移动 right 指针
+                right++;
+            } else {
+                // 字符不匹配，增加操作次数
+                operations++;
+                right++;
+            }
+            // 移动 left 指针
+            left++;
+        }
+
+        // 处理剩余字符
+        operations += S.length() - left;
+
+        return operations;
     }
 
 
