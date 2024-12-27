@@ -2,10 +2,7 @@ package com.py;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -356,6 +353,51 @@ public class BytedanceTest {
         operations += S.length() - left;
 
         return operations;
+    }
+
+
+    @Test
+    public void test12() {
+        System.out.println(solution12(4, Arrays.asList("a", "b", "c", "d"), Arrays.asList(1, 2, 2, 1))
+                .equals(Arrays.asList("b", "c", "a", "d")));
+        System.out.println(solution12(3, Arrays.asList("x", "y", "z"), Arrays.asList(100, 200, 200))
+                .equals(Arrays.asList("y", "z", "x")));
+        System.out.println(solution12(5, Arrays.asList("m", "n", "o", "p", "q"), Arrays.asList(50, 50, 30, 30, 20))
+                .equals(Arrays.asList("m", "n", "o", "p", "q")));
+    }
+
+    public static List<String> solution12(int n, List<String> s, List<Integer> x) {
+        // PLEASE DO NOT MODIFY THE FUNCTION SIGNATURE
+        // write code here
+        List<Person> peoples = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            Person person = new Person(s.get(i), x.get(i), i);
+            peoples.add(person);
+        }
+        peoples.sort((p1, p2) -> {
+            if (p1.amount != p2.amount) {
+                return p2.amount - p1.amount;
+            }
+            return p1.index - p2.index;
+        });
+        List<String> res = new ArrayList<>();
+        for (Person person : peoples) {
+            res.add(person.name);
+        }
+        return res;
+    }
+
+    // 定义一个类来存储每个人的信息
+    static class Person {
+        String name;
+        int amount;
+        int index;
+
+        Person(String name, int amount, int index) {
+            this.name = name;
+            this.amount = amount;
+            this.index = index;
+        }
     }
 
 
